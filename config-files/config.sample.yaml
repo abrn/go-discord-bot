@@ -1,0 +1,40 @@
+# * config.sample.yaml
+# * -- rename this to config.yaml and update with your info before starting
+# * - once you have set up your config, do 'go run tools/confclean.go'
+
+[discord] #* --- DISCORD OPTIONS --- *#
+
+# * you can create a application/bot and get a token under the Bot left-side panel:
+#  https://discord.com/developers/applications
+Token: "tokenhere"
+
+# ** running in debug mode means a lot more info messages will be logged to diagnose 
+# * or track down problems
+# change this to "false" when not testing and the console/logging output 
+DebugMode: true
+
+# **** Make sure you give the bot the GUILD_PRESENCES intent for the below ***
+# the presence of the bot. opts: 
+# *-- "IDLE", "DND", "ONLINE", "OFFLINE"
+Presence: "ONLINE"
+# the bot activity. opts: 
+# *-- "PLAYING", "LISTENING", "WATCHING", "CUSTOM", "COMPETING"
+ActivityType: "PLAYING"
+ActivityFormat: "with my new Discord bot!"
+# a link to an image to show for your activity, .png or .jpg format
+ActivityURL: "https://rotmg.dev/images/discordpfp.png"
+
+# below taken from https://discord.com/developers/docs/topics/gateway#activity-object-activity-types
+---ID  Name	       Format	               Example
+# * 0	 Game	       Playing {name}	       "Playing Rocket League"
+# * 2	 Listening	 Listening to {name}	 "Listening to Spotify"
+# * 3	 Watching	   Watching {name}	     "Watching YouTube Together"
+# * 4	 Custom	     {emoji} {name}	       ":smiley: I am cool"
+
+# right click your own discord profile and copy your id. owner account bypasses all permission checks
+OwnerID: "790272454047694890"
+# the ids of servers the bot should be active in. (right click a server and copy id with developer mode on)
+Servers:
+  - "891267087706763274"
+  - "change_or_remove_me"
+  - "change_or_remove_me"
