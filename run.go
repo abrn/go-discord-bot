@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/bwmarrin/discordgo"
+	"github.com/go-redis/redis/v8"
 )
 
 const exitCodeError     = 1
@@ -23,6 +24,8 @@ var (
 	Config *AppConfig
 	// the current connected bot session
 	Session *discordgo.Session
+	// the Redis cache key-value store
+	Database *redis.Client
 )
 
 func mainn() {
@@ -49,14 +52,18 @@ func mainn() {
 }
 
 func appLoop(signal chan os.Signal) {
-	appStartTime := time.Now().Unix()
+	appStartTime := time.Now().UnixMicro()
 	(func()  {
-		<-signal
 		
+		time.Sleep(time.Millisecond * 250)
 	})()
 	<-signal  //todo: get the reason for exiting
-	appEndTime := time.Now().Unix()
-	log.Printf("caught interrupt: ran for \n")
+	appEndTime := time.Now().UnixMicro()
+	timeDiff := ((appEndTime - appStartTime) / 1000)
+	mins := timeDiff * 60
+	secs := mins * 60
+	//todo: gracefully shut down
+	log.Printf("caught interrupt: ran for %d minutes %d seconds\n", mins, secs)
 }
 
 func appShutdown() {
