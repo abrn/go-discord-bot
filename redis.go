@@ -1,17 +1,17 @@
 package main
 
 import (
-    "context"
+	"context"
 	"log"
 
-    "github.com/go-redis/redis/v8"
+	"github.com/go-redis/redis/v8"
 )
 
 func testFunc() {
 	rdb := redis.NewClient(&redis.Options{
-		Addr: "localhost:6379",
+		Addr:     "localhost:6379",
 		Password: "",
-		OnConnect(AppContext, cn *redis.Conn),
+		OnConnect(AppContext, cn*redis.Conn),
 	})
 	Database = rdb
 	log.Printf("Connected to Redis cache successfully")

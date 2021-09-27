@@ -12,7 +12,7 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
-const exitCodeError     = 1
+const exitCodeError = 1
 const exitCodeInterrupt = 2
 
 var (
@@ -36,7 +36,7 @@ func mainn() {
 	// send a login request to the Discord API
 	discord, err := discordgo.New("Bot " + Config.Token)
 	if err != nil {
-		log.Fatalf("error logging into Discord: %s\n",err)
+		log.Fatalf("error logging into Discord: %s\n", err)
 	}
 	log.Printf("logged into Discord!")
 
@@ -53,11 +53,11 @@ func mainn() {
 
 func appLoop(signal chan os.Signal) {
 	appStartTime := time.Now().UnixMicro()
-	(func()  {
-		
+	(func() {
+
 		time.Sleep(time.Millisecond * 250)
 	})()
-	<-signal  //todo: get the reason for exiting
+	<-signal //todo: get the reason for exiting
 	appEndTime := time.Now().UnixMicro()
 	timeDiff := ((appEndTime - appStartTime) / 1000)
 	mins := timeDiff * 60

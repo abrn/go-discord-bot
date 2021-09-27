@@ -15,30 +15,30 @@ import (
 // DiscordServer - aka a 'Guild' in the API
 // 	GuildObject: https://discord.com/developers/docs/resources/guild#guild-object
 type DiscordServer struct {
-	Guild *discordgo.Guild  // the Guild API object
-	ID int  // the guild ID
-	Name string  // the guild name
-	Icon string  // the URL of the guild icon image
-	Banner string  // the URL of the guild banner imagw
-	OwnerID string  // the user ID of the server owner
+	Guild   *discordgo.Guild // the Guild API object
+	ID      int              // the guild ID
+	Name    string           // the guild name
+	Icon    string           // the URL of the guild icon image
+	Banner  string           // the URL of the guild banner imagw
+	OwnerID string           // the user ID of the server owner
 	Members []*discordgo.UserGuild
 }
 
 // The global configuration for the whole Discord bot
 type AppConfig struct {
-	Token string  // the Discord developer Bot token
-	Debug bool  // if to run in debug mode
-	Servers []*DiscordServer  // the servers the bot is configured for
-	OwnerID string  // the user id of the bot owner account
+	Token   string           // the Discord developer Bot token
+	Debug   bool             // if to run in debug mode
+	Servers []*DiscordServer // the servers the bot is configured for
+	OwnerID string           // the user id of the bot owner account
 }
 
 // The marshalled AppConfig parsed from config,yaml
 type AppConfigYML struct {
-	Discord yaml.Node `yaml:"discord"`
-	Token string `yaml:"discord.Token"`
-	DebugMode bool `yaml:"discord.DebugMode`
-	ServerID string `yaml:"discord.ServerID"`
-	OwnerID string `yaml:"discord.OwnerID"`
+	Discord   yaml.Node `yaml:"discord"`
+	Token     string    `yaml:"discord.Token"`
+	DebugMode bool      `yaml:"discord.DebugMode`
+	ServerID  string    `yaml:"discord.ServerID"`
+	OwnerID   string    `yaml:"discord.OwnerID"`
 }
 
 var config *AppConfig = nil
@@ -66,13 +66,15 @@ func loadConfig() *AppConfig {
 // unmarshalFile - finds the executable path and loads/unmarshalls the config.yml file
 func unmarshalFile() (*AppConfig, error) {
 	configFile := filepath.Join(BasePath(), "config-files", "config.yaml")
-	_, err := os.Stat(configFile); if err != nil {
+	_, err := os.Stat(configFile)
+	if err != nil {
 		// alert how to edit the sample file and then exit
 		sendSampleAlert()
 		return &AppConfig{}, err
 	}
 	// attempt to read the config file
-	bytes, err := os.ReadFile(configFile); if err != nil {
+	bytes, err := os.ReadFile(configFile)
+	if err != nil {
 		log.Fatalf("error opening the 'config.yaml' file: %s\n", err)
 		return &AppConfig{}, err
 	} else {
@@ -84,8 +86,8 @@ func unmarshalFile() (*AppConfig, error) {
 		}
 		// return the unmarshalled config data
 		return &AppConfig{
-			Token: conf.Token,
-			Debug: conf.DebugMode,
+			Token:   conf.Token,
+			Debug:   conf.DebugMode,
 			Servers: []*DiscordServer{},
 			OwnerID: conf.OwnerID,
 		}, nil
